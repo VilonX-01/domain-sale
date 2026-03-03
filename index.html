@@ -2,11 +2,21 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>anonim-chat.ru | For Sale</title>
     <style>
-        :root { --bg: #050505; --text: #e0e0e0; --accent: #ffffff; --secondary: #555; }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { 
+            --bg: #050505; 
+            --text: #e0e0e0; 
+            --accent: #ffffff; 
+            --secondary: #555; 
+        }
+        
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
         
         body {
             background-color: var(--bg);
@@ -18,25 +28,18 @@
             align-items: center;
             min-height: 100vh;
             -webkit-font-smoothing: antialiased;
-            overflow: hidden;
-        }
-
-        .container {
-            text-align: center;
-            max-width: 600px;
-            padding: 20px;
-            animation: fadeIn 1.2s ease-out forwards;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
+            /* Убрано overflow: hidden для возможности скролла на микро-экранах по высоте */
+            overflow-x: hidden; 
+            position: relative;
+            padding: 40px 20px 80px 20px; /* Отступы, чтобы контент не прилипал к краям и футеру */
         }
 
         .lang-switch {
-            margin-bottom: 30px;
+            position: absolute;
+            top: 30px;
             font-size: 12px;
             letter-spacing: 1px;
+            z-index: 10;
         }
 
         .lang-btn {
@@ -44,11 +47,27 @@
             border: none;
             color: var(--secondary);
             cursor: pointer;
-            padding: 5px 10px;
+            padding: 10px; /* Увеличен padding для удобного тапа на мобильных */
             transition: color 0.3s;
         }
 
-        .lang-btn.active { color: var(--accent); font-weight: bold; }
+        .lang-btn.active { 
+            color: var(--accent); 
+            font-weight: bold; 
+        }
+
+        .container {
+            text-align: center;
+            width: 100%;
+            max-width: 600px;
+            animation: fadeIn 1.2s ease-out forwards;
+            margin: auto;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
         .label {
             font-size: 11px;
@@ -56,28 +75,41 @@
             text-transform: uppercase;
             color: var(--secondary);
             margin-bottom: 15px;
+            display: block;
         }
 
         h1 {
+            /* clamp идеально подходит для адаптивности текста */
             font-size: clamp(28px, 6vw, 48px);
             font-weight: 200;
             letter-spacing: -1px;
             margin-bottom: 25px;
             color: var(--accent);
+            word-break: break-word; /* Защита от выхода длинного домена за экран */
+            line-height: 1.2;
         }
 
         .info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 80px; /* Красивое расстояние между колонками */
             margin-bottom: 40px;
-            text-align: left;
+            text-align: left; /* Оставляем левое выравнивание для эстетики */
             border-top: 1px solid #1a1a1a;
             padding-top: 25px;
         }
 
-        .info-item { font-size: 13px; color: var(--secondary); }
-        .info-item b { color: #888; display: block; margin-bottom: 4px; font-weight: 500; }
+        .info-item { 
+            font-size: 13px; 
+            color: var(--secondary); 
+        }
+        
+        .info-item b { 
+            color: #888; 
+            display: block; 
+            margin-bottom: 4px; 
+            font-weight: 500; 
+        }
 
         .contact-link {
             display: inline-block;
@@ -89,6 +121,8 @@
             border-radius: 4px;
             transition: background 0.3s, color 0.3s, border-color 0.3s;
             will-change: background-color;
+            width: 100%; /* На мобильных кнопка может быть на всю ширину */
+            max-width: 280px; /* Но не шире 280px */
         }
 
         .contact-link:hover {
@@ -100,12 +134,53 @@
         .footer {
             position: absolute;
             bottom: 30px;
+            left: 0;
+            width: 100%;
+            text-align: center;
             font-size: 10px;
-            color: #222;
+            color: #333;
             letter-spacing: 1px;
         }
 
         [data-lang="ru"] { display: none; }
+
+        /* --- МЕДИАЗАПРОСЫ ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ --- */
+        @media (max-width: 500px) {
+            .info-grid {
+                flex-direction: column;
+                text-align: center; 
+                gap: 25px;
+            }
+
+            .info-item b {
+                margin-bottom: 6px;
+            }
+
+            .label {
+                letter-spacing: 2px; /* Чуть уменьшаем межбуквенный интервал на узких экранах */
+            }
+            
+            body {
+                padding-top: 80px; /* Даем место для переключателя языков сверху */
+            }
+        }
+        
+        /* Фикс для очень низких экранов (например, телефон в горизонтальном положении) */
+        @media (max-height: 450px) {
+            .lang-switch {
+                position: relative;
+                top: 0;
+                margin-bottom: 20px;
+            }
+            body {
+                padding-top: 20px;
+            }
+            .footer {
+                position: relative;
+                bottom: 0;
+                margin-top: 40px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -117,7 +192,7 @@
     </div>
 
     <div class="container">
-        <div class="label">Premium Digital Asset</div>
+        <span class="label">Premium Digital Asset</span>
         <h1>anonim-chat.ru</h1>
 
         <div class="info-grid">
@@ -164,6 +239,7 @@
             vals[1].innerText = texts[lang].val2;
         }
 
+        // Автоматическое определение языка пользователя
         const userLang = navigator.language || navigator.userLanguage; 
         if (userLang.includes('ru')) setLang('ru');
     </script>
