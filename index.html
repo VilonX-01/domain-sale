@@ -3,98 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>anonim-chat.ru | Домен продается</title>
+    <title>anonim-chat.ru | For Sale</title>
     <style>
+        :root { --bg: #050505; --text: #e0e0e0; --accent: #ffffff; --secondary: #555; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: #0a0a0c;
-            color: #ffffff;
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
             overflow: hidden;
         }
-        /* Фон с легким градиентом для глубины */
-        body::before {
-            content: '';
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            background: rgba(0, 136, 204, 0.15);
-            filter: blur(100px);
-            border-radius: 50%;
-            z-index: -1;
-        }
-        .card {
+
+        .container {
             text-align: center;
-            padding: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            max-width: 450px;
-            width: 90%;
+            max-width: 600px;
+            padding: 20px;
+            animation: fadeIn 1.2s ease-out forwards;
         }
-        h1 {
-            font-size: 2rem;
-            letter-spacing: -1px;
-            margin-bottom: 12px;
-            background: linear-gradient(90deg, #fff, #888);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .domain-name {
-            color: #0088cc;
-            font-weight: bold;
-            display: block;
-            margin-bottom: 20px;
-            font-family: monospace;
-            font-size: 1.2rem;
-        }
-        p {
-            color: #a0a0a0;
-            line-height: 1.6;
-            margin-bottom: 32px;
-            font-size: 0.95rem;
-        }
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 14px 28px;
-            background-color: #ffffff;
-            color: #000000;
-            text-decoration: none;
-            border-radius: 12px;
-            font-weight: 600;
-            transition: all 0.2s ease;
-            width: 100%;
-        }
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
-            background-color: #e2e2e2;
-        }
-        .footer-note {
-            margin-top: 24px;
-            font-size: 0.75rem;
-            color: #444;
-            text-transform: uppercase;
+
+        .lang-switch {
+            margin-bottom: 30px;
+            font-size: 12px;
             letter-spacing: 1px;
         }
+
+        .lang-btn {
+            background: none;
+            border: none;
+            color: var(--secondary);
+            cursor: pointer;
+            padding: 5px 10px;
+            transition: color 0.3s;
+        }
+
+        .lang-btn.active { color: var(--accent); font-weight: bold; }
+
+        .label {
+            font-size: 11px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: clamp(28px, 6vw, 48px);
+            font-weight: 200;
+            letter-spacing: -1px;
+            margin-bottom: 25px;
+            color: var(--accent);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 40px;
+            text-align: left;
+            border-top: 1px solid #1a1a1a;
+            padding-top: 25px;
+        }
+
+        .info-item { font-size: 13px; color: var(--secondary); }
+        .info-item b { color: #888; display: block; margin-bottom: 4px; font-weight: 500; }
+
+        .contact-link {
+            display: inline-block;
+            padding: 16px 40px;
+            border: 1px solid #333;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 14px;
+            border-radius: 4px;
+            transition: background 0.3s, color 0.3s, border-color 0.3s;
+            will-change: background-color;
+        }
+
+        .contact-link:hover {
+            background: var(--accent);
+            color: var(--bg);
+            border-color: var(--accent);
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 30px;
+            font-size: 10px;
+            color: #222;
+            letter-spacing: 1px;
+        }
+
+        [data-lang="ru"] { display: none; }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h1>Продажа домена</h1>
-        <span class="domain-name">anonim-chat.ru</span>
-        <p>Этот премиальный адрес может стать вашим. Идеально подходит для сервиса знакомств или анонимного мессенджера.</p>
-        
-        <a href="https://t.me/vageo102hs21" class="btn">Связаться в Telegram</a>
-        
-        <div class="footer-note">Direct Offer Only</div>
+
+    <div class="lang-switch">
+        <button class="lang-btn active" onclick="setLang('en')">EN</button>
+        <span style="color: #222">/</span>
+        <button class="lang-btn" onclick="setLang('ru')">RU</button>
     </div>
+
+    <div class="container">
+        <div class="label">Premium Digital Asset</div>
+        <h1>anonim-chat.ru</h1>
+
+        <div class="info-grid">
+            <div class="info-item">
+                <b class="t-key">Category</b>
+                <span class="t-val">Social / Messaging</span>
+            </div>
+            <div class="info-item">
+                <b class="t-key">Features</b>
+                <span class="t-val">Short, Memorable, .RU</span>
+            </div>
+        </div>
+
+        <a href="https://t.me/vageo102hs21" class="contact-link" id="main-btn">Make an Offer</a>
+    </div>
+
+    <div class="footer">©2025-2026 SECURE TRANSACTION</div>
+
+    <script>
+        const texts = {
+            en: {
+                key: "Category", key2: "Features",
+                val: "Social / Messaging", val2: "Short, Memorable, .RU",
+                btn: "Make an Offer", label: "Premium Digital Asset"
+            },
+            ru: {
+                key: "Категория", key2: "Преимущества",
+                val: "Соцсети / Мессенджеры", val2: "Короткий, Запоминающийся",
+                btn: "Связаться / Купить", label: "Цифровой актив премиум-класса"
+            }
+        };
+
+        function setLang(lang) {
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            document.querySelector(`button[onclick="setLang('${lang}')"]`).classList.add('active');
+            
+            document.querySelector('.label').innerText = texts[lang].label;
+            document.getElementById('main-btn').innerText = texts[lang].btn;
+            const keys = document.querySelectorAll('.t-key');
+            const vals = document.querySelectorAll('.t-val');
+            keys[0].innerText = texts[lang].key;
+            keys[1].innerText = texts[lang].key2;
+            vals[0].innerText = texts[lang].val;
+            vals[1].innerText = texts[lang].val2;
+        }
+
+        const userLang = navigator.language || navigator.userLanguage; 
+        if (userLang.includes('ru')) setLang('ru');
+    </script>
 </body>
 </html>
