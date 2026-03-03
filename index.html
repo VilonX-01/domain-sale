@@ -28,10 +28,9 @@
             align-items: center;
             min-height: 100vh;
             -webkit-font-smoothing: antialiased;
-            /* Убрано overflow: hidden для возможности скролла на микро-экранах по высоте */
             overflow-x: hidden; 
             position: relative;
-            padding: 40px 20px 80px 20px; /* Отступы, чтобы контент не прилипал к краям и футеру */
+            padding: 40px 20px 80px 20px;
         }
 
         .lang-switch {
@@ -47,7 +46,7 @@
             border: none;
             color: var(--secondary);
             cursor: pointer;
-            padding: 10px; /* Увеличен padding для удобного тапа на мобильных */
+            padding: 10px;
             transition: color 0.3s;
         }
 
@@ -79,22 +78,21 @@
         }
 
         h1 {
-            /* clamp идеально подходит для адаптивности текста */
             font-size: clamp(28px, 6vw, 48px);
             font-weight: 200;
             letter-spacing: -1px;
             margin-bottom: 25px;
             color: var(--accent);
-            word-break: break-word; /* Защита от выхода длинного домена за экран */
+            word-break: break-word;
             line-height: 1.2;
         }
 
         .info-grid {
             display: flex;
             justify-content: center;
-            gap: 80px; /* Красивое расстояние между колонками */
+            gap: 80px;
             margin-bottom: 40px;
-            text-align: left; /* Оставляем левое выравнивание для эстетики */
+            text-align: left;
             border-top: 1px solid #1a1a1a;
             padding-top: 25px;
         }
@@ -121,8 +119,8 @@
             border-radius: 4px;
             transition: background 0.3s, color 0.3s, border-color 0.3s;
             will-change: background-color;
-            width: 100%; /* На мобильных кнопка может быть на всю ширину */
-            max-width: 280px; /* Но не шире 280px */
+            width: 100%;
+            max-width: 280px;
         }
 
         .contact-link:hover {
@@ -144,7 +142,6 @@
 
         [data-lang="ru"] { display: none; }
 
-        /* --- МЕДИАЗАПРОСЫ ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ --- */
         @media (max-width: 500px) {
             .info-grid {
                 flex-direction: column;
@@ -157,15 +154,14 @@
             }
 
             .label {
-                letter-spacing: 2px; /* Чуть уменьшаем межбуквенный интервал на узких экранах */
+                letter-spacing: 2px;
             }
             
             body {
-                padding-top: 80px; /* Даем место для переключателя языков сверху */
+                padding-top: 80px;
             }
         }
         
-        /* Фикс для очень низких экранов (например, телефон в горизонтальном положении) */
         @media (max-height: 450px) {
             .lang-switch {
                 position: relative;
@@ -239,7 +235,6 @@
             vals[1].innerText = texts[lang].val2;
         }
 
-        // Автоматическое определение языка пользователя
         const userLang = navigator.language || navigator.userLanguage; 
         if (userLang.includes('ru')) setLang('ru');
     </script>
